@@ -1,0 +1,32 @@
+berichtgradient
+-> startkleur
+	.Color=LightGray
+-> eindkleur
+	.Color=WhiteSmoke
+
+linksbalkje
+	.Background="LightPink"
+-> image
+	.Source=Resources/message_hart.png
+	.Angle=0
+-> eerste tekst
+	.Text=Valentijn
+	.Foreground=Black
+	.FontFamily=Myriad
+	.FontSize=30
+	.Margin="0"
+	.ScaleX=0
+	.Angle=0
+	.Relief=0.2
+-> tweede tekst
+	.Margin=-1
+	.Foreground=Red
+	.Opacity=0.6
+	.FontSize=30
+	.FontWeight=SemiBold
+	.FontFamily=""
+
+rechtsbalkje
+	.Background=IndianRed
+
+Fullscreen Chat lettertype: Lucidia Handwriting...

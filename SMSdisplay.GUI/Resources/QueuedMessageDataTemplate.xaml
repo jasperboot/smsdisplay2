@@ -1,0 +1,25 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:SMSdisplay.GUI"
+    xmlns:pluginapi="clr-namespace:SMSdisplay.Plugins;assembly=SMSdisplay.Plugins">
+
+    <DataTemplate DataType="{x:Type pluginapi:Message}">
+        <DataTemplate.Resources>
+        </DataTemplate.Resources>
+        <Grid Name="item" MinHeight="25" Margin="1" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ScrollViewer}}, Path=ViewportWidth}">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Vertical" VerticalAlignment="Top" Grid.Column="0" Grid.Row="0" Margin="5,0,15,0">
+                <TextBlock Text="{Binding DateText}" FontSize="10" />
+                <TextBlock Text="{Binding PhoneNumber}" FontSize="10" Foreground="LightGray" />
+            </StackPanel>
+            <TextBlock Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Text="{Binding MessageText}" FontWeight="Bold" VerticalAlignment="Top" HorizontalAlignment="Left" TextWrapping="Wrap" Margin="0,0,0,4" />
+        </Grid>
+    </DataTemplate>    
+</ResourceDictionary>

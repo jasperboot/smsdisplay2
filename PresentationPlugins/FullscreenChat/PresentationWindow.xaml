@@ -1,0 +1,39 @@
+﻿<pluginapi:PluginWindow x:Class="SMSdisplay.Plugins.FullscreenChat.PresentationWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:pluginapi="clr-namespace:SMSdisplay.Plugins;assembly=SMSdisplay.Plugins"
+    xmlns:local="clr-namespace:SMSdisplay.Plugins.FullscreenChat" 
+    Title="Presentation Window" Height="768" Width="1024" Background="Transparent" Icon="Resources/SMSdisplay2.ico" AllowsTransparency="True">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" MinHeight="60"/>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" MinHeight="10" />
+        </Grid.RowDefinitions>
+
+        <Grid.Resources>
+            <ResourceDictionary>
+                <!-- Import the resource dictionary which contains the DataTemplate for the Message class. -->
+                <ResourceDictionary.MergedDictionaries>
+                    <ResourceDictionary Source="Resources/MessageDataTemplate.xaml" />
+                </ResourceDictionary.MergedDictionaries>
+            </ResourceDictionary>
+        </Grid.Resources>
+        <Border Style="{DynamicResource HeaderBox}" Margin="10" CornerRadius="15,15,15,15" Grid.Row="0">
+            <StackPanel Orientation="Horizontal">
+                <Image Style="{DynamicResource HeaderIcon}" Grid.Column="0" Margin="20,10,40,10" Height="120" Canvas.Left="0" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                <Label Style="{DynamicResource HeaderTitle}" Height="Auto" HorizontalAlignment="Left" Name="label1" VerticalAlignment="Center" Width="Auto" />
+                <Label Style="{DynamicResource HeaderSubtitle}" VerticalAlignment="Center" />
+            </StackPanel>
+        </Border>
+        <Canvas Grid.Row="0">
+        <Border Style="{DynamicResource LargeInfotextBox}" Canvas.Bottom="-5" Canvas.Right="15" Height="45" MinWidth="500" CornerRadius="15">
+            <Grid>
+                    <TextBlock Style="{DynamicResource LargeInfotext}" Name="systemText" Margin="10,0,10,0" HorizontalAlignment="Left" VerticalAlignment="Center" TextAlignment="Left" SnapsToDevicePixels="True"  Text="System is starting" />
+                    <TextBlock Style="{DynamicResource LargeInfotext}" Name="costsText" Margin="10,0,10,0" HorizontalAlignment="Left" VerticalAlignment="Center" TextAlignment="Left" SnapsToDevicePixels="True" Visibility="Hidden" />
+            </Grid>
+        </Border>
+        </Canvas>
+            <ItemsControl Name="messageList" Margin="20,20,20,0"  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Top" ItemsSource="{Binding}" Grid.Row="1" />
+    </Grid>
+</pluginapi:PluginWindow>

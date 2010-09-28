@@ -1,0 +1,285 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{05AD9EFB-E1A6-48D8-9C20-55342D0CDE2A}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SMSdisplay.GUI</RootNamespace>
+    <AssemblyName>SMSdisplay2</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <StartupObject>
+    </StartupObject>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <ApplicationIcon>Resources\SMSdisplay2.ico</ApplicationIcon>
+    <ManifestCertificateThumbprint>7BE6662EE27C09DD3D7692535170DB2DC37A2635</ManifestCertificateThumbprint>
+    <ManifestKeyFile>SMSdisplay2_TemporaryKey.pfx</ManifestKeyFile>
+    <GenerateManifests>true</GenerateManifests>
+    <SignManifests>true</SignManifests>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <InstallUrl>http://www.willibrordusgroep.nl/~jboot/SMSdisplay2/</InstallUrl>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="PresentationCore">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="PresentationFramework">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="UIAutomationProvider">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\ShownMessageDataTemplate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\OutputScreenDataTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\QueuedMessageDataTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\SerialPortDataTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Converters\ConnectionTypeConverter.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="PhoneStatus.cs" />
+    <Compile Include="Util\Screensaver.cs" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GSM.Communicator\GSM.Communicator.csproj">
+      <Project>{4372F13E-54A5-4FF0-A7B2-5352AB199C2D}</Project>
+      <Name>GSM.Communicator</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GSM.AT\GSM.AT.csproj">
+      <Project>{85796C4E-77F6-4596-A6F9-056BE1B1B625}</Project>
+      <Name>GSM.AT</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GSM\GSM.csproj">
+      <Project>{7775530D-625C-42AE-B765-08154A9DB398}</Project>
+      <Name>GSM</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SMSdisplay.Plugins\SMSdisplay.Plugins.csproj">
+      <Project>{244E6AD9-C73E-4C34-907A-2C33A674B6F7}</Project>
+      <Name>SMSdisplay.Plugins</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SMSdisplay.Presenter\SMSdisplay.Presenter.csproj">
+      <Project>{64D9B97E-8D42-4050-8D47-E11B013B99C8}</Project>
+      <Name>SMSdisplay.Presenter</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\phone_unconnected.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\phone_connected.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ConnectionImages\serial.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ConnectionImages\usb.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ConnectionImages\modem.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ConnectionImages\phone.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\SMSdisplay.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\StatusImages\battery_unknown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\StatusImages\silentmode_unknown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\StatusImages\network_none.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\StatusImages\mailbox_unknown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\StatusImages\battery_charging.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\StatusImages\battery.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\StatusImages\network.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\StatusImages\silentmode_on.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\StatusImages\silentmode_off.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\SMSdisplay2.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\display_off.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\display_on.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\QueueImages\approved.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\QueueImages\rejected.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\QueueImages\shown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\StatusImages\mailbox.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\QueueImages\archived.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\QueueImages\newmessage.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

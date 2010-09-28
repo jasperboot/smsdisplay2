@@ -1,0 +1,447 @@
+﻿<Window x:Class="SMSdisplay.GUI.MainWindow"
+        Name="mainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:SMSdisplay.GUI" 
+    xmlns:libat="clr-namespace:GSM.AT;assembly=GSM.AT"
+    xmlns:pluginapi="clr-namespace:SMSdisplay.Plugins;assembly=SMSdisplay.Plugins"
+    Title="Thundersoft SMSdisplay 2" Height="800" Width="1200" Icon="Resources/SMSdisplay2.ico" ShowInTaskbar="True" ShowActivated="True" Top="0">
+    
+    <Window.Resources>
+        <Style TargetType="{x:Type ListView}">
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Visible" />
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden" />
+        </Style>
+        <Style TargetType="{x:Type GroupBox}">
+            <Setter Property="Margin" Value="5" />
+        </Style>
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Margin" Value="0,5" />
+        </Style>
+        <Style TargetType="{x:Type StackPanel}" x:Key="ControlPanelItem">
+            <Setter Property="Margin" Value="5" />
+        </Style>
+        <DropShadowBitmapEffect x:Key="imageShadow" Opacity="0.5" ShadowDepth="3" />
+        <LinearGradientBrush x:Key="ToolBarBrush" StartPoint="0,0" EndPoint="0,1.1">
+            <GradientStop Color="LightGray" Offset="0.5" />
+            <GradientStop Color="Transparent" Offset="1" />
+        </LinearGradientBrush>
+        <Style TargetType="{x:Type Separator}" BasedOn="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}">
+            <Setter Property="Margin" Value="8" />
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto" MinHeight="23" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Name="controlPanel" Background="{StaticResource ToolBarBrush}" VerticalAlignment="Top" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" MinWidth="222" />
+                <ColumnDefinition Width="Auto" MinWidth="222" />
+                <ColumnDefinition Width="*" MinWidth="220" />
+                <ColumnDefinition Width="Auto" MinWidth="240" />
+                <ColumnDefinition Width="Auto" MinWidth="120" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" MinHeight="109" />
+                <RowDefinition Height="Auto" MinHeight="110" />
+            </Grid.RowDefinitions>
+            <GroupBox Header="Presentation screen" Name="gbdisplayControl" VerticalAlignment="Stretch" Grid.Row="0" Grid.Column="0">
+                <Grid Name="displayControl" VerticalAlignment="Top">
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Style="{StaticResource ControlPanelItem}">
+                            <Image Name="screenState" Source="Resources/display_off.png" Height="64" Margin="1,0,5,0" />
+                        </StackPanel>
+                        <StackPanel>
+                            <ComboBox Name="screens" Width="150" Height="54" ItemsSource="{Binding}" SelectionChanged="screens_SelectionChanged" />
+                            <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                                <CheckBox Name="cbScreenLock" Click="cbScreenLock_Clicked">
+                                    <CheckBox.ToolTip>
+                                        Lock the screen selection box to prevent the presentation window from moving to another window by accident
+                                    </CheckBox.ToolTip>
+                                    Safety lock
+                                </CheckBox>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </GroupBox>
+            <GroupBox Header="Phone connection" Name="gbConnectionControl" VerticalAlignment="Stretch" Grid.Row="0" Grid.Column="1">
+                <StackPanel Name="connectionControl" Orientation="Horizontal">
+                    <StackPanel HorizontalAlignment="Stretch">
+                        <ComboBox Name="serialPorts" Width="210" Height="45" ItemsSource="{Binding}">
+                        </ComboBox>
+                        <StackPanel Orientation="Horizontal">
+                            <Button Name="btnConnect" Content="Connect" IsEnabled="False" Width="100" Margin="0,5,5,0" />
+                            <Button Name="btnDisconnect" Content="Disconnect" IsEnabled="False" Width="100" Margin="5,5,0,0"/>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Header="Phone status" Name="gbPhoneControl" VerticalAlignment="Stretch" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="3">
+                <Grid Name="phoneControl">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Style="{StaticResource ControlPanelItem}" Grid.Column="0">
+                        <Image Name="connectionState" Source="Resources/phone_unconnected.png" Height="64" Margin="-15,0,-15,0" BitmapEffect="{StaticResource imageShadow}" />
+                    </StackPanel>
+                    <Grid Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Row="0" Grid.Column="0" FontWeight="Bold" VerticalAlignment="Center">Brand:</Label>
+                        <TextBlock Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Ident}" />
+                        <Label Grid.Row="1" Grid.Column="0" FontWeight="Bold" VerticalAlignment="Center">Model:</Label>
+                        <TextBlock Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Model}" />
+                        <Label Grid.Row="2" Grid.Column="0" FontWeight="Bold" VerticalAlignment="Center">Number:</Label>
+                        <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1">
+                            <TextBlock VerticalAlignment="Center" Text="{Binding Number}" />
+                        </StackPanel>
+                    </Grid>
+                    <Separator Grid.Column="2" />
+                    <Grid Grid.Column="3">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Image Name="networkImage" Grid.Row="0" Grid.Column="0" Source="Resources/StatusImages/network_none.png" Height="32" VerticalAlignment="Center" />
+                        <Grid Grid.Row="0" Grid.Column="1">
+                            <ProgressBar Name="signalStrengthIndicator" Value="{Binding Signal}" SmallChange="5" LargeChange="20" Minimum="1" Maximum="100" IsIndeterminate="False" Background="Transparent" BorderThickness="0,0,1,1" BorderBrush="DarkBlue" Foreground="DarkBlue" Margin="14,10,14,8">
+                                <ProgressBar.ToolTip>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Signal}" />
+                                        <TextBlock>%</TextBlock>
+                                    </StackPanel>
+                                </ProgressBar.ToolTip>
+                            </ProgressBar>
+                            <TextBlock Name="signalType" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding ConnectionType}"  Visibility="Hidden" Foreground="DarkBlue"/>
+                        </Grid>
+                        <TextBlock Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Center" Width="120" Text="{Binding Network}" TextAlignment="Center" FontWeight="SemiBold"></TextBlock>
+                    </Grid>
+                    <Separator Grid.Column="4" />
+                    <Grid Margin="-2,0,4,0" Grid.Column="5">
+                        <Image Name="silentModeImage" Source="Resources/StatusImages/silentmode_unknown.png" Height="48" VerticalAlignment="Center" BitmapEffect="{StaticResource imageShadow}" />
+                    </Grid>
+                    <Grid Margin="4" Grid.Column="6">
+                        <Image Name="chargeImage" Source="Resources/StatusImages/battery_unknown.png" Height="64" VerticalAlignment="Center" BitmapEffect="{StaticResource imageShadow}" />
+                        <ProgressBar Margin="-3,0,0,0" Name="batteryIndicator" HorizontalAlignment="Center" Height="20" Width="43" Value="{Binding Battery}" SmallChange="1" LargeChange="20" IsIndeterminate="False" Foreground="Green" BorderThickness="0" Background="Transparent">
+                            <ProgressBar.ToolTip>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Battery}" />
+                                    <TextBlock>%</TextBlock>
+                                </StackPanel>
+                            </ProgressBar.ToolTip>
+                        </ProgressBar>
+                    </Grid>
+                    <Grid Margin="4" Grid.Column="7">
+                        <Image Name="inboxImage" Source="Resources/StatusImages/mailbox_unknown.png" Height="64" VerticalAlignment="Center" BitmapEffect="{StaticResource imageShadow}" />
+                        <ProgressBar Name="inboxIndicator" HorizontalAlignment="Center" Height="20" Width="50" Value="{Binding InboxCount}" Maximum="{Binding InboxCapacity}" SmallChange="1" LargeChange="10" Foreground="Green" BorderThickness="0" Background="Transparent">
+                            <ProgressBar.ToolTip>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding InboxCount}"></TextBlock>
+                                    <TextBlock> / </TextBlock>
+                                    <TextBlock Text="{Binding InboxCapacity}"></TextBlock>
+                                </StackPanel>
+                            </ProgressBar.ToolTip>
+                        </ProgressBar>
+                    </Grid>
+                </Grid>
+            </GroupBox>
+            <GroupBox Header="Presentation plugin &amp; theme" Name="gbpluginControl" VerticalAlignment="Stretch" Grid.Row="1" Grid.Column="0">
+                <Grid Name="pluginControl" VerticalAlignment="Top">
+                    <StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right">Plugin</Label>
+                            <ComboBox Grid.Row="0" Grid.Column="1" Name="plugins" Width="130" Margin="2" Height="24" ItemsSource="{Binding}" SelectionChanged="plugins_SelectionChanged" ItemTemplate="{DynamicResource PluginTemplate}" />
+                            <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right">Theme</Label>
+                            <ComboBox Grid.Row="1" Grid.Column="1" Name="themes" Width="130" Margin="2" Height="24" ItemsSource="{Binding}" SelectionChanged="themes_SelectionChanged" ItemTemplate="{DynamicResource PluginThemeTemplate}" />
+                        </Grid>
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox Name="cbPluginLock" Click="cbPluginLock_Clicked" VerticalAlignment="Center" Margin="3,2,3,2" FlowDirection="RightToLeft">
+                                <CheckBox.ToolTip>
+                                    Lock the plugin selection box and display toggle button to prevent the presentation window from changing
+                                </CheckBox.ToolTip>
+                                Safety lock
+                            </CheckBox>
+                            <Button Name="btnToggleDisplay" Click="btnToggleDisplay_Click" Width="110" Height="20" Margin="5,2,0,0" IsEnabled="False">S_how</Button>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </GroupBox>
+            <GroupBox Header="Message switching" Name="gbqueueControl" VerticalAlignment="Stretch" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
+                <Grid Name="messageControl">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" MinWidth="40" />
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Label VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right">Show a message every</Label>
+                    <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1">
+                        <TextBox VerticalAlignment="Center" Width="30" IsReadOnly="True" Text="{Binding ElementName=queueInterval,Path=Value}"></TextBox>
+                        <Label VerticalAlignment="Center">sec</Label>
+                    </StackPanel>
+                    <Slider Name="queueInterval" Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Height="20" Margin="3" Minimum="5" Maximum="60" Value="{Binding SwitchingIntervalSeconds}" SmallChange="5" TickPlacement="BottomRight" TickFrequency="5" LargeChange="10" IsSnapToTickEnabled="True" />
+                    <CheckBox Name="cbAutoApproval" IsEnabled="True" Margin="5,0,5,0" VerticalAlignment="Center" FlowDirection="RightToLeft" Grid.Row="1" Grid.Column="0" IsChecked="{Binding AutoApproval}">
+                        <CheckBox.ToolTip>
+                            <TextBlock>Messages will be auto-approved after the configured amount of seconds</TextBlock>
+                        </CheckBox.ToolTip>
+                        <TextBlock Margin="5,0,0,0">
+                             Auto-approve after
+                        </TextBlock>
+                    </CheckBox>
+                    <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" VerticalAlignment="Bottom">
+                        <TextBox VerticalAlignment="Center" Width="30" IsReadOnly="True" Text="{Binding ElementName=approvalInterval,Path=Value}"></TextBox>
+                        <Label VerticalAlignment="Center">sec</Label>
+                    </StackPanel>
+                    <Slider Name="approvalInterval" Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" Height="20" Margin="3" Minimum="10" Maximum="160" Value="{Binding ApprovalIntervalSeconds}" SmallChange="10" TickPlacement="BottomRight" TickFrequency="10" LargeChange="25" IsSnapToTickEnabled="True"></Slider>
+                    <CheckBox Name="cbSendmsgInterval" Margin="5,0,5,0" VerticalAlignment="Center" FlowDirection="RightToLeft" Grid.Row="2" Grid.Column="0" IsChecked="{Binding AlwaysSendInformation}">
+                        <CheckBox.ToolTip>
+                            <TextBlock>The send information message is after a certain amount of messages, even if there are new messages waiting</TextBlock>
+                        </CheckBox.ToolTip>
+                        <TextBlock Margin="5,0,0,0">
+                             Send information every
+                        </TextBlock>
+                    </CheckBox>
+                    <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1" VerticalAlignment="Bottom">
+                        <TextBox VerticalAlignment="Center" Width="30" IsReadOnly="True" Text="{Binding ElementName=sendmsgInterval,Path=Value}" />
+                        <Label VerticalAlignment="Center">msgs</Label>
+                    </StackPanel>
+                    <Slider Name="sendmsgInterval" Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" Height="20" Margin="3" Minimum="1" Maximum="20" SmallChange="1" TickPlacement="BottomRight" TickFrequency="1" LargeChange="5" IsSnapToTickEnabled="True" Value="{Binding AlwaysSendInformationInterval}" />
+
+                    <Separator Grid.Column="3" Grid.RowSpan="3" />
+                    
+                    <CheckBox Name="cbLoopArchive" IsChecked="{Binding LoopArchive}" Margin="4" Grid.Row="0" Grid.Column="4">
+                        <CheckBox.ToolTip>
+                            <TextBlock>When there are no more approved messages to display, loop over all archived messages instead of showing just the last one</TextBlock>
+                        </CheckBox.ToolTip>
+                        <TextBlock>
+                        Loop archive instead of last
+                        </TextBlock>
+                    </CheckBox>
+                    <CheckBox Name="cbShowCostingMessage" IsChecked="{Binding ShowCostsAndConditions}" Grid.Row="1" Margin="4" Grid.Column="4">
+                        <CheckBox.ToolTip>
+                            <TextBlock>
+                            Show a message once in a while, which states the costs and conditions of this service
+                            </TextBlock>
+                        </CheckBox.ToolTip>
+                        <TextBlock>
+                            Show costs and conditions
+                        </TextBlock>
+                    </CheckBox>
+                    <StackPanel Orientation="Horizontal" Name="SwitcherControl" IsEnabled="False" Grid.Row="2" VerticalAlignment="Top" Grid.Column="4">
+                        <Button Name="btnStartQueue" Click="btnStartQueue_Click" Width="95" Margin="0,2,5,0" IsEnabled="True">_Start</Button>
+                        <Button Name="btnStopQueue" Click="btnStopQueue_Click" Width="95" Margin="5,2,0,0" IsEnabled="False">_Stop</Button>
+                    </StackPanel>
+                </Grid>
+            </GroupBox>
+            <GroupBox Header="Options" Name="gboptionControl" Margin="5,6,5,4" Grid.Row="1" Grid.Column="3">
+                <Grid Name="optionControl" VerticalAlignment="Top">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <CheckBox Name="cbRemoveRead" IsChecked="False" Click="cbRemoveRead_Click" Grid.Row="0" Margin="4">
+                        <CheckBox.ToolTip>
+                            <TextBlock>
+                                Remove messages that have been downloaded to the application from the phone (to prevent the phone storage from filling up)
+                            </TextBlock>
+                        </CheckBox.ToolTip>
+                        <TextBlock>
+                        Remove messages from phone
+                        </TextBlock>
+                    </CheckBox>
+                    <CheckBox Name="cbManualApproved" IsChecked="True" Grid.Row="1" Margin="4">
+                        <CheckBox.ToolTip>
+                            <TextBlock>Inject manual messages directly at the top of the approved list</TextBlock>
+                        </CheckBox.ToolTip>
+                        <TextBlock>
+                            Inject manuals as next to show
+                        </TextBlock>
+                    </CheckBox>
+                    <CheckBox Name="cbShowOfflineMessage" IsChecked="{Binding ShowPublicOffline}" Grid.Row="2" Margin="4">
+                        <CheckBox.ToolTip>
+                            <TextBlock>
+                                Show the 'System Offline' message on the (public) presentation screen (if disabled no one will notice)
+                            </TextBlock>
+                        </CheckBox.ToolTip>
+                        <TextBlock>
+                        Show public 'System Offline'
+                        </TextBlock>
+                    </CheckBox>
+                </Grid>
+            </GroupBox>
+            <Grid HorizontalAlignment="Right" Width="120" Grid.Row="1" Grid.Column="4">
+                <Image HorizontalAlignment="Center" VerticalAlignment="Center" Source="Resources/SMSdisplay.png" Width="85" Margin="0,0,0,0">
+                    <Image.ToolTip>
+                        <StackPanel>
+                            <TextBlock FontWeight="Bold">SMSdisplay 2</TextBlock>
+                            <TextBlock>© 2009, 2010 Jasper Boot</TextBlock>
+                        </StackPanel>
+                    </Image.ToolTip>
+                </Image>
+            </Grid>
+        </Grid>
+        <Grid Name="messagePanel" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="3*" />
+            </Grid.ColumnDefinitions>
+
+                <Grid Grid.Row="0" Grid.ColumnSpan="3" Name="gbmanualMessage">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                    <Image Source="Resources/QueueImages/newmessage.png" VerticalAlignment="Center" Height="32" Margin="2" Opacity="0.8" />
+                    <Label Content="New" FontWeight="Bold" VerticalAlignment="Center" />
+                    <Separator />
+                </StackPanel>
+                <Label Grid.Column="1" VerticalAlignment="Center" Content="Insert _message:" Target="{Binding ElementName=manualMessage}" />
+                <TextBox Grid.Column="2" Name="manualMessage" VerticalAlignment="Center" KeyUp="manualMessage_KeyUp" />
+                <TextBlock Grid.Column="3" Name="charCount" VerticalAlignment="Center" HorizontalAlignment="Center">(0)</TextBlock>
+                <Button Grid.Column="4" Name="btnInsertManual" Width="60" Click="btnInsertManual_Click" IsEnabled="False">Insert</Button>
+                <StackPanel Grid.Column="5" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                    <Separator />
+                    <Label Content="Approved" FontWeight="Bold" VerticalAlignment="Center" />
+                    <Image Source="Resources/QueueImages/approved.png" VerticalAlignment="Center" Height="32" Margin="2" Opacity="0.8" />
+                </StackPanel>
+            </Grid>
+            <Button Grid.Row="2" Grid.Column="1" Width="100" Margin="5" HorizontalAlignment="Left" Name="btnApprove" IsEnabled="False" Click="btnApprove_Click">_Approve</Button>
+            <Button Grid.Row="2" Grid.Column="0" Width="100" Margin="5" HorizontalAlignment="Right" Name="btnReject" IsEnabled="False" Click="btnReject_Click">_Reject</Button>
+
+            <ListView Grid.Row="1" Grid.ColumnSpan="2" Name="lvNewMessages" ItemsSource="{Binding}" SelectionChanged="lvNewMessages_SelectionChanged" SelectionMode="Extended" KeyUp="messageList_KeyUp">
+                <ListView.Background>
+                    <SolidColorBrush Opacity="0.08" Color="Yellow"/>
+                </ListView.Background>
+            </ListView>
+
+            <ListView Grid.Row="1" Grid.Column="3" Name="lvApprovedMessages" ItemsSource="{Binding}" SelectionMode="Single" KeyUp="messageList_KeyUp">
+                <ListView.Background>
+                    <SolidColorBrush Opacity="0.1" Color="Chartreuse"/>
+                </ListView.Background>
+            </ListView>
+
+            <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Left">
+                <Image Source="Resources/QueueImages/rejected.png" VerticalAlignment="Center" Height="32" Margin="2" Opacity="0.8" />
+                <Label Content="Rejected" FontWeight="Bold" VerticalAlignment="Center" />
+            </StackPanel>
+            <ListView Grid.Row="3" Grid.Column="0" Name="lvRejectedMessages" ItemsSource="{Binding}" SelectionMode="Single" KeyUp="messageList_KeyUp">
+                <ListView.Background>
+                    <SolidColorBrush Color="OrangeRed" Opacity="0.05" />
+                </ListView.Background>
+            </ListView>
+
+            <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                <Label Content="Archived" FontWeight="Bold" VerticalAlignment="Center" />
+                <Image Source="Resources/QueueImages/archived.png" VerticalAlignment="Center" Height="32" Margin="2" Opacity="0.8" />
+            </StackPanel>
+            <ListView Grid.Row="3" Grid.Column="1" Name="lvArchivedMessages" ItemsSource="{Binding}" SelectionChanged="lvArchivedMessages_SelectionChanged" KeyUp="messageList_KeyUp">
+                <ListView.Background>
+                    <SolidColorBrush Color="AliceBlue" Opacity="0.3" />
+                </ListView.Background>
+            </ListView>
+
+            <Grid Grid.Row="2" Grid.Column="3" Grid.RowSpan="2" Background="Gray">
+                <ItemsControl Name="lvShownMessages" ItemsSource="{Binding}" ItemTemplate="{StaticResource ShownMessage}" VerticalAlignment="Center" BorderBrush="Gray">
+                    <ItemsControl.Resources>
+                        <Style TargetType="{x:Type ItemsControl}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ItemsControl}">
+                                        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch">
+                                            <Border Padding="0,10,0,8">
+                                                <ItemsPresenter />
+                                            </Border>
+                                        </ScrollViewer>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ItemsControl.Resources>
+                </ItemsControl>
+            </Grid>
+            <Border Grid.Row="2" Grid.Column="3" Background="White" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="1,1,26,1" CornerRadius="10">
+                <Border.BitmapEffect>
+                    <DropShadowBitmapEffect />
+                </Border.BitmapEffect>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Screen preview" FontWeight="Bold" VerticalAlignment="Center" />
+                    <Image Source="Resources/QueueImages/shown.png" VerticalAlignment="Center" Height="24" Margin="2,2,4,2" Opacity="0.9" />
+                </StackPanel>
+            </Border>
+        </Grid>
+        <StatusBar Height="23" Name="statusBar" VerticalAlignment="Bottom" Grid.Row="2" BorderThickness="1" BorderBrush="Gray">
+            <StatusBar.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="200"/>
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ItemsPanelTemplate>
+            </StatusBar.ItemsPanel>
+            <StatusBarItem Name="applicationStatus">
+                <TextBlock Name="applicationStatusText" Text="{Binding Status}" TextTrimming="CharacterEllipsis"></TextBlock>
+            </StatusBarItem>
+            <StatusBarItem Name="connectionStatus" Grid.Column="1">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="{Binding ElementName=connectionState, Path=Source}" />
+                    <TextBlock Name="connectionStatusText" Text="{Binding StatusMessage}"/>
+                </StackPanel>
+            </StatusBarItem>
+        </StatusBar>
+    </Grid>
+</Window>

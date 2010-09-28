@@ -1,0 +1,166 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- FullscreenChat plugin -->
+    <!-- ## -->
+
+    <!-- ChatMessage -->
+    <Style x:Key="ChatMessageBox" TargetType="Border">
+        <Setter Property="BitmapEffect">
+            <Setter.Value>
+                <DropShadowBitmapEffect />
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="ChatMessage" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="Arial" />
+        <Setter Property="FontSize" Value="36" />
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="FontWeight" Value="Bold" />
+    </Style>
+
+    <!-- Header -->
+    <Style x:Key="HeaderBox" TargetType="Border">
+        <Setter Property="Background" Value="LightPink" />
+        <Setter Property="BitmapEffect">
+            <Setter.Value>
+                <DropShadowBitmapEffect />
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="HeaderIcon" TargetType="Image">
+        <Setter Property="Source" Value="pack://siteoforigin:,,,/Themes/Resources/message_heartdrinks.png" />
+        <Setter Property="RenderTransform">
+            <Setter.Value>
+                <RotateTransform Angle="-5" CenterX="80"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="HeaderTitle" TargetType="Label">
+        <Setter Property="Content" Value="Valentine" />
+        <Setter Property="FontFamily" Value="Lucida Handwriting" />
+        <Setter Property="FontSize" Value="60" />
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="FontWeight" Value="Bold" />
+    </Style>
+    <Style x:Key="HeaderSubtitle" TargetType="Label">
+        <Setter Property="Content" Value="Chatbox" />
+        <Setter Property="FontFamily" Value="Myriad" />
+        <Setter Property="FontSize" Value="60" />
+        <Setter Property="Foreground" Value="Crimson" />
+        <Setter Property="FontStyle" Value="Italic" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Margin" Value="30,0,0,0" />
+    </Style>
+
+    <!-- LargeInfotext -->
+    <Style x:Key="LargeInfotextBox" TargetType="Border">
+        <Setter Property="Background" Value="Crimson" />
+        <Setter Property="RenderTransform">
+            <Setter.Value>
+                <RotateTransform Angle="-4" CenterX="0"/>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="BitmapEffect">
+            <Setter.Value>
+                <DropShadowBitmapEffect />
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="LargeInfotext" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="Arial" />
+        <Setter Property="FontSize" Value="24" />
+        <Setter Property="FontStyle" Value="Italic" />
+        <Setter Property="FontWeight" Value="Normal" />
+        <Setter Property="FontStretch" Value="SemiCondensed" />
+        <Setter Property="Foreground" Value="WhiteSmoke" />
+        <Setter Property="BitmapEffect">
+            <Setter.Value>
+                <DropShadowBitmapEffect ShadowDepth="2" Opacity="0.7" Softness="0.3" Color="Black" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- MessageBar plugin -->
+    <!-- ## -->
+
+    <!-- Message -->
+    <Style x:Key="MessageBox" TargetType="Border">
+        <Setter Property="Background">
+            <Setter.Value>
+                <LinearGradientBrush>
+                    <GradientStop Color="LightGoldenrodYellow" Offset="0" />
+                    <GradientStop Color="LightYellow" Offset="1" />
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="BitmapEffect">
+            <Setter.Value>
+                <DropShadowBitmapEffect />
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="Message" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="Arial" />
+        <Setter Property="FontSize" Value="34" />
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="FontWeight" Value="Bold" />
+    </Style>
+
+    <!-- Left panel -->
+    <Style x:Key="PanelBox" TargetType="Border">
+        <Setter Property="Background">
+            <Setter.Value>
+                <SolidColorBrush Color="LightPink" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="BitmapEffect">
+            <Setter.Value>
+                <DropShadowBitmapEffect />
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="PanelIcon" TargetType="Image">
+        <Setter Property="Source" Value="pack://siteoforigin:,,,/Themes/Resources/message_heartdrinks.png" />
+        <Setter Property="RenderTransform">
+            <Setter.Value>
+                <RotateTransform Angle="-5" CenterX="80" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="PanelTitle" TargetType="TextBlock">
+        <Setter Property="Text" Value="Valentine" />
+        <Setter Property="FontFamily" Value="Lucida Handwriting" />
+        <Setter Property="FontSize" Value="24" />
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="FontWeight" Value="Normal" />
+        <Setter Property="FontStretch" Value="Normal" />
+        <Setter Property="Margin" Value="2" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+    </Style>
+    <Style x:Key="PanelSubtitle" TargetType="TextBlock">
+        <Setter Property="Text" Value="SMS" />
+        <Setter Property="FontFamily" Value="Arial" />
+        <Setter Property="FontSize" Value="32" />
+        <Setter Property="Foreground" Value="Crimson" />
+        <Setter Property="FontStyle" Value="Italic" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Opacity" Value="0.8" />
+        <Setter Property="Margin" Value="-10,-5,0,0" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+    </Style>
+
+    <!-- Infotext -->
+    <Style x:Key="InfotextBox" TargetType="Border">
+        <Setter Property="Background" Value="Crimson" />
+    </Style>
+    <Style x:Key="Infotext" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="Arial" />
+        <Setter Property="FontSize" Value="21" />
+        <Setter Property="FontStyle" Value="Italic" />
+        <Setter Property="FontWeight" Value="Normal" />
+        <Setter Property="FontStretch" Value="SemiCondensed" />
+        <Setter Property="Foreground" Value="WhiteSmoke" />
+    </Style>
+
+</ResourceDictionary>
