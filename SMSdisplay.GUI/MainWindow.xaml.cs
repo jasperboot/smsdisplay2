@@ -234,9 +234,39 @@ namespace SMSdisplay.GUI
             // Enable for debug form
             //monfrm.Show();
 
+            presenter.Status = "Processing release information";
+            ReleaseCopyright.Text = ApplicationCopyright;
+            ReleaseText.Text = ApplicationRelease;
+            ReleaseText.Visibility = Visibility.Visible;
+
             presenter.Status = "Cleaning up...";
             btnConnect.IsEnabled = !communicator.Connection;
             presenter.Status = "Running";
+        }
+
+        public string ApplicationCopyright
+        {
+            get
+            {
+                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
+                if (attributes.Length == 0)
+                    return null;
+                return ((AssemblyCopyrightAttribute)attributes[0]).Copyright.Replace("Copyright ", "");
+            }
+        }
+
+        public string ApplicationRelease
+        {
+            get
+            {
+                Version productVersion = Assembly.GetExecutingAssembly().GetName().Version;
+                string release = String.Format("{0}.{1}", productVersion.Major, productVersion.Minor);
+                // We use the third (Build) number as the patch revision
+                if (productVersion.Build > 0) release += String.Format(".{0}", productVersion.Build);
+                // And the fourth (Revision) number as the build number
+                string build = (productVersion.Revision > 0) ? String.Format(" - build {0}", productVersion.Revision) : "";
+                return String.Format("Release {0}{1}", release, build);
+            }
         }
 
         void communicator_IdentChange(object sender, IdentChangeEventArgs e)

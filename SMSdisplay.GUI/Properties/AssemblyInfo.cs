@@ -12,7 +12,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("SMSdisplay2")]
-[assembly: AssemblyCopyright("Copyright © 2009, 2010 Jasper Boot")]
+[assembly: AssemblyCopyright("Copyright © 2009 - 2011 Jasper Boot")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

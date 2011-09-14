@@ -312,7 +312,8 @@
                     <Image.ToolTip>
                         <StackPanel>
                             <TextBlock FontWeight="Bold">SMSdisplay 2</TextBlock>
-                            <TextBlock>© 2009, 2010 Jasper Boot</TextBlock>
+                            <TextBlock Name="ReleaseText" Visibility="Collapsed" />
+                            <TextBlock Name="ReleaseCopyright">© Jasper Boot</TextBlock>
                         </StackPanel>
                     </Image.ToolTip>
                 </Image>
