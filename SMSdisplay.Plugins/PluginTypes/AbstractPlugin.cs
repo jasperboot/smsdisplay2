@@ -49,6 +49,14 @@ namespace SMSdisplay.Plugins.PluginTypes
             }
         }
 
+        public int ApiVersion
+        {
+            get
+            {
+                return (this.GetType().GetCustomAttributes(typeof(PluginAttribute), false)[0] as PluginAttribute).ApiVersion;
+            }
+        }
+        
         protected string PhoneNumber
         {
             get; set; 

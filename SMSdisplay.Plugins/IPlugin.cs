@@ -31,6 +31,7 @@ namespace SMSdisplay.Plugins
         string Name { get; }
         string Description { get; }
         int Version { get; }
+        int ApiVersion { get; }
 
         // Lifecycle methods
         void Initialize();

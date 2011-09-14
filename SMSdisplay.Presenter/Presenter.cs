@@ -101,7 +101,7 @@ namespace SMSdisplay
 
         private void loadPlugins()
         {
-            Plugins = PluginLoader.LoadPlugins();
+            Plugins = PluginLoader.LoadPlugins(1, @"PresentationPlugins");
             initializePlugins();
         }
 

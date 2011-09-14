@@ -33,11 +33,24 @@ namespace SMSdisplay.Plugins
 
     public static class PluginLoader
     {
-        public static List<IPlugin> LoadPlugins()
+        public static List<IPlugin> LoadPlugins(int minimumApiVersion)
+        {
+            return LoadPlugins(minimumApiVersion, @".\");
+        }
+
+        public static List<IPlugin> LoadPlugins(int minimumApiVersion, string pluginFolder)
         {
             List<IPlugin> plugins = new List<IPlugin>();
-            string[] files = Directory.GetFiles("PresentationPlugins", "*.plugin.dll");
-
+            string[] files;
+            try
+            {
+                files = Directory.GetFiles(pluginFolder, "*.plugin.dll");
+            }
+            catch (DirectoryNotFoundException e)
+            {
+                Console.WriteLine("Plugin folder '{0}' not found or unreadable", pluginFolder);
+                return plugins;
+            }
             foreach (string f in files)
             {
 
@@ -55,10 +68,12 @@ namespace SMSdisplay.Plugins
                                 throw new PluginNotValidException(type, "PluginAttribute is not defined");
 
                             PluginAttribute details = (attributes[0] as PluginAttribute);
+                            if (details.ApiVersion < minimumApiVersion)
+                                throw new PluginNotValidException(type, String.Format("Minimum API version (v{0}) not satisfied (plugin provides v{1})", minimumApiVersion, details.ApiVersion));
 
                             IPlugin plugin = (Activator.CreateInstance(type) as IPlugin);
                             plugins.Add(plugin);
-                            Console.WriteLine("Plugin loaded: {0} v{1} ({3}) - {2}", details.Name, details.Version, details.Description, version.ToString(4));
+                            Console.WriteLine("Plugin loaded: {0} v{1} (Assembly: {4}; API: v{2}) - {3}", details.Name, details.Version, details.ApiVersion, details.Description, version.ToString(4));
                         }
                     }
                 }

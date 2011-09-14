@@ -31,6 +31,7 @@ namespace SMSdisplay.Plugins
         {
             Name = name;
             Description = description;
+            ApiVersion = 1;
             Version = 1;
         }
 
@@ -41,6 +42,7 @@ namespace SMSdisplay.Plugins
 
         public string Name { get; set; }
         public string Description { get; set; }
+        public int ApiVersion { get; set; }
         public int Version { get; set; }
     }
 }
