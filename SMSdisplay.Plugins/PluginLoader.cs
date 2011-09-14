@@ -64,7 +64,7 @@ namespace SMSdisplay.Plugins
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("Plugin class '{0}' will not be loaded: {1}", e.Data, e.Message);
+                    Console.WriteLine("Plugin class '{0}' will not be loaded: {1}", e.Data["Type"], e.Message);
                 }
             }
 
