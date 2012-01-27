@@ -28,6 +28,9 @@ namespace SMSdisplay.Plugins
 {
     public interface IPlugin
     {
+        // NOTE: Please remember to add a new plugin-api-v<n> tag
+        //       when changing the Plugin API
+
         string Name { get; }
         string Description { get; }
         int Version { get; }

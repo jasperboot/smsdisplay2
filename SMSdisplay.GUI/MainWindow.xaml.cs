@@ -238,6 +238,8 @@ namespace SMSdisplay.GUI
             ReleaseCopyright.Text = ApplicationCopyright;
             ReleaseText.Text = ApplicationRelease;
             ReleaseText.Visibility = Visibility.Visible;
+            ReleaseBuild.Text = ApplicationBuild;
+            ReleaseBuild.Visibility = Visibility.Visible;
 
             presenter.Status = "Cleaning up...";
             btnConnect.IsEnabled = !communicator.Connection;
@@ -259,13 +261,15 @@ namespace SMSdisplay.GUI
         {
             get
             {
-                Version productVersion = Assembly.GetExecutingAssembly().GetName().Version;
-                string release = String.Format("{0}.{1}", productVersion.Major, productVersion.Minor);
-                // We use the third (Build) number as the patch revision
-                if (productVersion.Build > 0) release += String.Format(".{0}", productVersion.Build);
-                // And the fourth (Revision) number as the build number
-                string build = (productVersion.Revision > 0) ? String.Format(" - build {0}", productVersion.Revision) : "";
-                return String.Format("Release {0}{1}", release, build);
+                return String.Format("Release {0} - {1}", BuildInfo.Version.Short, BuildInfo.Version.ReleaseType);
+            }
+        }
+
+        public string ApplicationBuild
+        {
+            get
+            {
+                return String.Format("{0} ({1})", BuildInfo.Version.BuildType, BuildInfo.Version.Build);
             }
         }
 

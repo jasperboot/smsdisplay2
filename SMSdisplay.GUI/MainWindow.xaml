@@ -314,6 +314,7 @@
                             <TextBlock FontWeight="Bold">SMSdisplay 2</TextBlock>
                             <TextBlock Name="ReleaseText" Visibility="Collapsed" />
                             <TextBlock Name="ReleaseCopyright">© Jasper Boot</TextBlock>
+                            <TextBlock Name="ReleaseBuild" Visibility="Collapsed" Foreground="Gray" />
                         </StackPanel>
                     </Image.ToolTip>
                 </Image>

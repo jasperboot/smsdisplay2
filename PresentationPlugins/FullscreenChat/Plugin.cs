@@ -26,7 +26,7 @@ using SMSdisplay.Plugins.PluginTypes;
 
 namespace SMSdisplay.Plugins.FullscreenChat
 {
-    [Plugin("Fullscreen chat", "Full screen chat showing multiple messages", Version = 1, ApiVersion = 3)]
+    [Plugin("Fullscreen chat", "Full screen chat showing multiple messages", Version = 1, ApiVersion = BuildInfo.PluginApi.Version)]
     public class Plugin : ScreenPlugin<PresentationWindow>, IPlugin
     {
         private const string postMessage = "Ook een berichtje plaatsen? Stuur een SMSje naar {0}";

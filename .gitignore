@@ -50,3 +50,7 @@ _ReSharper*/
 
 # Office Temp Files
 ~$*
+
+# Build script cache files
+git-vs-versioninfo.cs
+.git-vs-versioninfo

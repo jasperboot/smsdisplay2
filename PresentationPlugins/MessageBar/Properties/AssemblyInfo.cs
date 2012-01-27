@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("Bar in the bottom of the screen showing one message")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("SMSdisplay 2")]
+[assembly: AssemblyProduct(BuildInfo.Product.Name)]
 [assembly: AssemblyCopyright("Copyright © 2009, 2010 Jasper Boot")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.3.0.0")]
-[assembly: AssemblyFileVersion("1.3.0.0")]
+[assembly: AssemblyVersion(BuildInfo.Version.ProductVersion)]
+[assembly: AssemblyFileVersion(BuildInfo.PluginApi.TechnicalVersion)]

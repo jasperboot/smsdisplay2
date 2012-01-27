@@ -11,7 +11,7 @@ using System.Windows;
 [assembly: AssemblyDescription("Show SMS (text) messages from your mobile on a bi screen")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("SMSdisplay2")]
+[assembly: AssemblyProduct(BuildInfo.Product.Name)]
 [assembly: AssemblyCopyright("Copyright © 2009 - 2011 Jasper Boot")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -51,5 +51,5 @@ using System.Windows;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.0.1.0")]
-[assembly: AssemblyFileVersion("2.0.1.0")]
+[assembly: AssemblyVersion(BuildInfo.Version.ProductVersion)]
+[assembly: AssemblyFileVersion(BuildInfo.Version.TechnicalVersion)]

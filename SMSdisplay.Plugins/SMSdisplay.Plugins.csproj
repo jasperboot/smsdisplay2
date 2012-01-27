@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{244E6AD9-C73E-4C34-907A-2C33A674B6F7}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\PluginAttribute.cs" />
+    <Compile Include="git-vs-versioninfo.cs" />
     <Compile Include="MessageList.cs" />
     <Compile Include="IPlugin.cs" />
     <Compile Include="Message.cs" />
@@ -106,4 +107,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <PreBuildEvent>CALL $(SolutionDir)scripts\git-vs-versioninfo.bat "$(SolutionDir)scripts\" "$(ProjectDir)git-vs-versioninfo.cs" "$(SolutionName)"</PreBuildEvent>
+  </PropertyGroup>
 </Project>
