@@ -8,7 +8,7 @@
     <ProjectGuid>{64D9B97E-8D42-4050-8D47-E11B013B99C8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SMSdisplay.GUI</RootNamespace>
+    <RootNamespace>SMSdisplay</RootNamespace>
     <AssemblyName>SMSdisplay.Presenter</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -50,6 +50,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="git-vs-versioninfo.cs" />
     <Compile Include="OutputScreen.cs" />
     <Compile Include="OutputScreenList.cs" />
     <Compile Include="Presenter.cs" />
@@ -69,4 +70,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <PreBuildEvent>CALL $(SolutionDir)scripts\git-vs-versioninfo.bat "$(ProjectDir)" "$(ProjectDir)git-vs-versioninfo.cs" "$(RootNamespace)" "$(ProjectName)" "$(SolutionName)"</PreBuildEvent>
+  </PropertyGroup>
 </Project>

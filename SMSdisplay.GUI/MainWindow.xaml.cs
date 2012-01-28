@@ -40,6 +40,8 @@ using SMSdisplay.Plugins;
 using System.Reflection;
 using System.Collections.ObjectModel;
 using GSM.Forms;
+using AppBuildInfo = SMSdisplay.GUI.BuildInfo;
+using SMSdisplay.GUI.BuildInfo;
 
 namespace SMSdisplay.GUI
 {
@@ -261,7 +263,7 @@ namespace SMSdisplay.GUI
         {
             get
             {
-                return String.Format("Release {0} - {1}", BuildInfo.Version.Short, BuildInfo.Version.ReleaseType);
+                return String.Format("Release {0} - {1}", BuildVersion.Short, BuildVersion.ReleaseType);
             }
         }
 
@@ -269,7 +271,7 @@ namespace SMSdisplay.GUI
         {
             get
             {
-                return String.Format("{0} ({1})", BuildInfo.Version.BuildType, BuildInfo.Version.Build);
+                return String.Format("{0} ({1})", BuildVersion.BuildType, BuildVersion.Build);
             }
         }
 

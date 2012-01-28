@@ -3,15 +3,16 @@ using System.Resources;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows;
+using SMSdisplay.Plugins.Tester.BuildInfo;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("SMSdisplay.Plugins.Tester")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("SMSdisplay2 Plugin Tester")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("SMSdisplay.Plugins.Tester")]
+[assembly: AssemblyProduct(Product.Name)]
 [assembly: AssemblyCopyright("Copyright ©  2010")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -51,5 +52,5 @@ using System.Windows;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion(BuildInfo.PluginApi.TechnicalVersion)]
-[assembly: AssemblyFileVersion(BuildInfo.PluginApi.TechnicalVersion)]
+[assembly: AssemblyVersion(PluginApi.TechnicalVersion)]
+[assembly: AssemblyFileVersion(PluginApi.TechnicalVersion)]

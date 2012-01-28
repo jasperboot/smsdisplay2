@@ -1,5 +1,6 @@
 @ECHO OFF
-SETLOCAL
+SETLOCAL ENABLEEXTENSIONS
+SETLOCAL ENABLEDELAYEDEXPANSION
 
 ::: git-vs-versioninfo -  Generation of static C# class with version information 
 
@@ -28,8 +29,9 @@ SET COUNT_PATCHES_FROM=maint
 ::: CHECK_ARGS
 ::: --------------------
 
-:: Init Software Name
+:: Init argument values
 SET SW_NAME=
+SET NS=
 
 :: Console output only.
 IF [%1] == [] GOTO START
@@ -49,12 +51,23 @@ IF [%~nx1] NEQ [] (
   :: %1 is a file
   SET HEADER_OUT_FILE=%~fs1
   SHIFT
-)
+) ELSE GOTO USAGE
+IF "%~1" NEQ "" (
+  SET ROOTNS=%~1
+  SHIFT
+) ELSE GOTO USAGE
+
+IF "%~1" NEQ "" (
+  SET PRJ_NAME=%~1
+  SHIFT
+) ELSE GOTO USAGE
 
 IF "%~1" NEQ "" (
   SET SW_NAME=%~1
   SHIFT
-)
+) ELSE GOTO USAGE
+
+
 :: This should always be the last argument.
 IF [%1] NEQ [] GOTO USAGE
 
@@ -72,7 +85,7 @@ GOTO START
 ::: --------------------
 :USAGE
 ::: --------------------
-ECHO usage: [--help] ^| ^| [--quiet] [--force] [CACHE PATH] [OUT FILE] [SW NAME]
+ECHO usage: [--help] ^| ^| [--force] [--quiet] CACHE_PATH OUTFILE ROOTNS PRJNAME SWNAME
 ECHO.
 ECHO  When called without arguments version information writes to console.
 ECHO.
@@ -80,16 +93,17 @@ ECHO  --help     - displays this output.
 ECHO.
 ECHO  --quiet    - Suppress console output.
 ECHO  --force    - Ignore cached version information.
-ECHO  CACHE PATH - Path for non-tracked file to store git-describe version.
-ECHO  OUT FILE   - Path to writable file that is included in the project.
-ECHO  SWE NAME   - Override auto-detected software name
-ECHO.
+ECHO  CACHE_PATH - Path for non-tracked file to store git-describe version.
+ECHO  OUTFILE    - Path to writable file that is included in the project.
+ECHO  ROOTNS     - Project's root namespace
+ECHO  PRJNAME    - Project name
+ECHO  SWNAME     - Override auto-detected software nameECHO.
 ECHO.Version information is expected to be in the format: 
 ECHO.vMajor[.Minor[.Maint[.Bugfix]]][-stage#][-Patchcount-Committish]
 ECHO.( where -stage# is alpha, beta, or rc. Example: v1.0.0-alpha0 )
 ECHO.
 ECHO.Example pre-build event:
-ECHO.CALL $(SolutionDir)scripts\git-vs-versioninfo.bat "$(SolutionDir)scripts\" "$(ProjectDir)git-vs-versioninfo.cs" "$(SolutionName)"
+ECHO.CALL $(SolutionDir)scripts\git-vs-versioninfo.bat "$(ProjectDir)" "$(ProjectDir)git-vs-versioninfo.cs" "$(RootNamespace)" "$(ProjectName)" "$(SolutionName)"
 ECHO.
 GOTO END
 
@@ -103,12 +117,12 @@ CALL :GET_VERSION_STRING
 IF DEFINED fGIT_AVAILABLE (
   IF DEFINED fLEAVE_NOW GOTO END
 )
-CALL :GET_VS_DETAILS
 CALL :PARSE_FULL_VERSION
 IF DEFINED CACHE_FILE (
   CALL :CHECK_CACHE
 )
 IF DEFINED fLEAVE_NOW GOTO END
+CALL :GET_VS_DETAILS
 CALL :WRITE_CACHE
 CALL :SET_DETAILS
 CALL :SET_VERSION_DIGITS
@@ -178,6 +192,7 @@ IF NOT ERRORLEVEL 1 (
   )
 )
 IF "%SW_NAME%" EQU "" SET SW_NAME=%SW_NAME_DETECT%
+REM SET NS=%NS: =.%
 SET FULL_VERSION=%FULL_VERSION:~1%
 GOTO :EOF
 
@@ -192,7 +207,7 @@ FOR /F "tokens=2 delims=v" %%A IN ('"git describe --abbrev=0 --match plugin-api-
 )
 
 FOR /F "tokens=*" %%A IN ('"git rev-parse --show-toplevel 2> NUL"') DO SET GIT_ROOT=%%A
-for %%A in ("%GIT_ROOT%") do SET SW_NAME_DETECT=%%~nA
+FOR %%A in ("%GIT_ROOT%") do SET SW_NAME_DETECT=%%~nA
 
 SET tmp=
 CALL git update-index -q --refresh >NUL 2>&1
@@ -211,7 +226,16 @@ GOTO :EOF
 ::: --------------------
 :GET_VS_DETAILS
 ::: --------------------
-IF "%SolutionName%" NEQ "" SET SW_NAME=%SolutionName%
+SET PREFIX=!!ROOTNS:%PRJ_NAME%=!!
+IF "%PRJ_NAME%" EQU "!!PRJ_NAME:%ROOTNS%=!!" SET PRJ_NAME=%PREFIX%%PRJ_NAME%
+SET NS=!!PRJ_NAME:%ROOTNS%=!!
+IF "%NS%" NEQ "" SET NS=%NS:.=_%
+IF "%NS%" NEQ "" ( 
+  IF "%NS:~0,1%" NEQ "_" ( 
+    SET NS=_%NS%
+  )
+)
+SET NS=%ROOTNS%%NS%
 GOTO :EOF
 
 ::: --------------------
@@ -253,6 +277,7 @@ FOR /F "tokens=1,2,* delims=-" %%A IN ("%VERSION_REST%") DO (
   SET MARKER=%%B
   SET VERSION_REST=%%C
 )
+SET COMMITTISH=%COMMITTISH:~1%
 IF NOT DEFINED fGIT_AVAILABLE (
   SET fNO_VCS=1
   SET MARKER=novcs
@@ -496,7 +521,7 @@ GOTO :EOF
 SET SCRIPT_NAME=%~n0%
 ECHO.// Generated version info [%SCRIPT_NAME%].>"%HEADER_OUT_FILE%"
 ECHO. >> "%HEADER_OUT_FILE%"
-ECHO.namespace BuildInfo >> "%HEADER_OUT_FILE%"
+ECHO.namespace %NS%.BuildInfo >> "%HEADER_OUT_FILE%"
 ECHO.{ >> "%HEADER_OUT_FILE%"
 ECHO.    // %SW_NAME% v%VERSION% - %vTYPE% >> "%HEADER_OUT_FILE%"
 ECHO.    // Build: %FULL_VERSION% (%vBUILD%) >> "%HEADER_OUT_FILE%"
@@ -506,7 +531,7 @@ ECHO.    { >> "%HEADER_OUT_FILE%"
 ECHO.        public const string Name = "%SW_NAME%"; >> "%HEADER_OUT_FILE%"
 ECHO.    } >> "%HEADER_OUT_FILE%"
 ECHO. >> "%HEADER_OUT_FILE%"
-ECHO.    public static class Version >> "%HEADER_OUT_FILE%"
+ECHO.    public static class BuildVersion >> "%HEADER_OUT_FILE%"
 ECHO.    { >> "%HEADER_OUT_FILE%"
 ECHO.        public const string		Short				= "%VERSION%";				>> "%HEADER_OUT_FILE%"
 ECHO.        public const string		Build				= "%FULL_VERSION%";			>> "%HEADER_OUT_FILE%"

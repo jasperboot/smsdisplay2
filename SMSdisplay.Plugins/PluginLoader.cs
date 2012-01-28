@@ -20,6 +20,7 @@ using System;
 using System.IO;
 using System.Reflection;
 using System.Collections.Generic;
+using SMSdisplay.Plugins.BuildInfo;
 
 namespace SMSdisplay.Plugins
 {
@@ -33,6 +34,16 @@ namespace SMSdisplay.Plugins
 
     public static class PluginLoader
     {
+        public static List<IPlugin> LoadPlugins()
+        {
+            return LoadPlugins(PluginApi.Version, @".\");
+        }
+
+        public static List<IPlugin> LoadPlugins(string pluginFolder)
+        {
+            return LoadPlugins(PluginApi.Version, pluginFolder);
+        }
+
         public static List<IPlugin> LoadPlugins(int minimumApiVersion)
         {
             return LoadPlugins(minimumApiVersion, @".\");

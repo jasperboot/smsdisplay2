@@ -23,10 +23,11 @@ using System.Text;
 using System.Windows;
 using SMSdisplay.Plugins;
 using SMSdisplay.Plugins.PluginTypes;
+using SMSdisplay.Plugins.MessageBar.BuildInfo;
 
 namespace SMSdisplay.Plugins.MessageBar
 {
-    [Plugin("Message bar", "Bar in the bottom of the screen showing one message", Version = 2, ApiVersion = BuildInfo.PluginApi.Version)]
+    [Plugin("Message bar", "Bar in the bottom of the screen showing one message", Version = 2, ApiVersion = PluginApi.Version)]
     public class Plugin : ScreenPlugin<PresentationWindow>, IPlugin
     {
         private const string postMessage = "Ook een berichtje plaatsen? Stuur een SMSje naar {0}";

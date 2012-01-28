@@ -23,10 +23,11 @@ using System.Text;
 using System.Windows;
 using SMSdisplay.Plugins;
 using SMSdisplay.Plugins.PluginTypes;
+using SMSdisplay.Plugins.FullscreenChat.BuildInfo;
 
 namespace SMSdisplay.Plugins.FullscreenChat
 {
-    [Plugin("Fullscreen chat", "Full screen chat showing multiple messages", Version = 1, ApiVersion = BuildInfo.PluginApi.Version)]
+    [Plugin("Fullscreen chat", "Full screen chat showing multiple messages", Version = 1, ApiVersion = PluginApi.Version)]
     public class Plugin : ScreenPlugin<PresentationWindow>, IPlugin
     {
         private const string postMessage = "Ook een berichtje plaatsen? Stuur een SMSje naar {0}";

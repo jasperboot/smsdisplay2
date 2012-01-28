@@ -108,6 +108,6 @@
   </Target>
   -->
   <PropertyGroup>
-    <PreBuildEvent>CALL $(SolutionDir)scripts\git-vs-versioninfo.bat "$(SolutionDir)scripts\" "$(ProjectDir)git-vs-versioninfo.cs" "$(SolutionName)"</PreBuildEvent>
+    <PreBuildEvent>CALL $(SolutionDir)scripts\git-vs-versioninfo.bat "$(ProjectDir)" "$(ProjectDir)git-vs-versioninfo.cs" "$(RootNamespace)" "$(ProjectName)" "$(SolutionName)"</PreBuildEvent>
   </PropertyGroup>
 </Project>

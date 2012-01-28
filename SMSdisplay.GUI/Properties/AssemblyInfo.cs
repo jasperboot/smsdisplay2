@@ -3,6 +3,7 @@ using System.Resources;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows;
+using SMSdisplay.GUI.BuildInfo;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
@@ -11,7 +12,7 @@ using System.Windows;
 [assembly: AssemblyDescription("Show SMS (text) messages from your mobile on a bi screen")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct(BuildInfo.Product.Name)]
+[assembly: AssemblyProduct(Product.Name)]
 [assembly: AssemblyCopyright("Copyright © 2009 - 2011 Jasper Boot")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -51,5 +52,5 @@ using System.Windows;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion(BuildInfo.Version.ProductVersion)]
-[assembly: AssemblyFileVersion(BuildInfo.Version.TechnicalVersion)]
+[assembly: AssemblyVersion(BuildVersion.ProductVersion)]
+[assembly: AssemblyFileVersion(BuildVersion.TechnicalVersion)]

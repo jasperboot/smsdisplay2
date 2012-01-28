@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{1515F7A7-442B-42BB-907C-409A6483F0B2}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -55,6 +55,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="git-vs-versioninfo.cs" />
     <Compile Include="Resources\DivideDoubleByTwoConverter.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="PresentationWindow.xaml.cs">
@@ -95,5 +96,6 @@
   <PropertyGroup>
     <PostBuildEvent>md $(SolutionDir)SMSdisplay.GUI\bin\$(ConfigurationName)\PresentationPlugins
 copy $(TargetDir)*.plugin.dll $(SolutionDir)SMSdisplay.GUI\bin\$(ConfigurationName)\PresentationPlugins</PostBuildEvent>
+    <PreBuildEvent>CALL $(SolutionDir)scripts\git-vs-versioninfo.bat "$(ProjectDir)" "$(ProjectDir)git-vs-versioninfo.cs" "$(RootNamespace)" "$(ProjectName)" "$(SolutionName)"</PreBuildEvent>
   </PropertyGroup>
 </Project>
